@@ -1,0 +1,59 @@
+﻿<Window x:Class="TorGuard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tor Guard Konfiguartion" Height="450" Width="800">
+    <Grid Margin="0,10,0,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="116"/>
+            <RowDefinition Height="Auto" MinHeight="39.96"/>
+            <RowDefinition Height="43"/>
+            <RowDefinition Height="53"/>
+            <RowDefinition Height="Auto" MinHeight="47"/>
+
+
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="7*"/>
+
+            <RowDefinition Height="30*"/>
+
+        </Grid.RowDefinitions>
+
+        <!-- E-Mail Adressen -->
+        <Label Content="E-Mail-Adressen:" Grid.Row="3" Margin="10,10,10,10"/>
+        <TextBox x:Name="txtEmailAddress" Grid.Row="3" Margin="115,10,300,10"/>
+
+        <Button x:Name="btnAddEmail" Content="Hinzufügen" Grid.Row="3" Margin="582,10,10,10" Click="btnAddEmail_Click"/>
+        <Button x:Name="btnRemoveEmail" Content="Löschen" Grid.Row="4" Margin="582,10,10,10" Click="btnRemoveEmail_Click"/>
+
+        <ListBox x:Name="lstEmailAddresses" Grid.Row="4" Margin="25,10,275,10"/>
+
+        <Button x:Name="btnTest" Content="Test senden" Grid.Row="5" Margin="10,10,10,10" Click="btnTest_Click"/>
+        <!-- verwendete sende E-mail -->
+        <Label Content="SensderEmail:" Grid.Row="6" Margin="20,10,650,3"/>
+        <TextBox x:Name="txtsEmail" Grid.Row="6" Margin="150,10,450,3"/>
+
+        <Label Content="Email Passwort:" Grid.Row="6" Margin="400,10,10,3"/>
+        <PasswordBox x:Name="txtEmailpassword" Grid.Row="6" Margin="500,10,10,3"/>
+
+        <Label Content="Smtp Server adresse:" Grid.Row="7" Margin="20,3,650,19"/>
+        <TextBox x:Name="txtsmtpadre" Grid.Row="7" Margin="150,3,500,19" TextChanged="txtsmtpadre_TextChanged"/>
+
+        <Label Content="Nr. :" Grid.Row="7" Margin="400,3,360,19"/>
+        <TextBox x:Name="txtSmtpNr" Grid.Row="7" Margin="500,3,26,19"/>
+
+        <Button x:Name="bntSpeichern" Content="Speichern der Eingaben" Grid.Row="8"  Click="btnSpeichern_Click" Margin="10,0,10,0" RenderTransformOrigin="0.5,0.544" Height="21" VerticalAlignment="Center"/>
+
+        <!-- Tor Konfiguration Button -->
+        <Button Content="Tor Konfiguration" Grid.Row="10" Margin="10,10,10,2" Click="btnTorConfig_Click"/>
+
+        <!-- Netzwerk Konfiguration Button -->
+        <Button Content="Netzwerk Konfiguration" Grid.Row="12" Margin="10,5,10,1" Click="btnNetworkConfig_Click"/>
+
+
+    </Grid>
+</Window>
