@@ -16,6 +16,8 @@ using System.IO;
 using System.Text.Json;
 using System.Xml.Linq;
 
+
+
 // Test Email MentkenL061@sus-am-bktm.de
 
 //Bei Mail.de
@@ -38,6 +40,7 @@ using System.Xml.Linq;
 
 namespace TorGuard
 {
+    
     public partial class MainWindow : Window
     {
         // Liste zum Speichern der E-Mail-Adressen
@@ -99,7 +102,10 @@ namespace TorGuard
             // Überprüfen, ob mindestens eine E-Mail-Adresse vorhanden ist
             if (emailAddresses.Count > 0)
             {
-                await EmailsAsync(emailAddresses);
+                
+                C_EmailService service = new C_EmailService();
+                service.EmailsAsync(emailAddresses);
+                
             }
             else
             {
@@ -199,8 +205,10 @@ namespace TorGuard
         }
 
         // Methode zum Laden der Labels und ListBox-Inhalte aus einer Datei
-        private void LoadConfigurationFromFile_Mail()
-        {
+        private List LoadConfigurationFromFile_Mail() {
+
+            List<List> returnList = new List<List>();
+
             MessageBox.Show("Die Anwendung wurde geöffnet und initialisiert.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 try
                 {
@@ -214,12 +222,23 @@ namespace TorGuard
 
                         emailAddresses = ((JsonElement)configData?.EmailAddresses).EnumerateArray().Select(email => email.GetString()).ToList();
 
+                        List<string> senderEmailDaten = new List<string>();
+
+                      
+
                         txtsEmail.Text = configData?.SMTP?.Email;
                         txtEmailpassword.Password = configData?.SMTP?.Password;
                         txtsmtpadre.Text = configData?.SMTP?.Address;
                         txtSmtpNr.Text = configData?.SMTP?.Port;
 
+                        senderEmailDaten.Add(configData?.SMTP?.Email, 
+                                                configData?.SMTP?.Password,
+                                                configData?.SMTP?.Address,
+                                                configData?.SMTP?.Port);
+
                         RefreshEmailList();
+
+                        return returnList.Add(emailAddresses,senderEmailDaten);
                     }
                 }
                 catch (Exception ex)

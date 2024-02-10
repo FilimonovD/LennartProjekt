@@ -29,18 +29,20 @@ namespace TorGuard
         }
 
         //Methode zum asynchronen Versenden einer E-Mail
-        public async Task<bool> SendEmailAsync(string empfängeradresse)
-        {
+        public async Task<bool> SendEmailAsync(string empfängeradresse) {
 
-            try
-            {   //Email Kopf angaben 
+          List<List> emailInfo = ReadJSON.LoadConfigurationFromFile_Mail();
+
+          var senderEmailInfo = emailInfo[1];
+          
+            try {   //Email Kopf angaben 
 
                 MimeMessage email = new MimeMessage();
 
                 //email.From.Add(new MailboxAddress("Absender", "Tor_Guard@web.de"));
                 //email.To.Add(new MailboxAddress("Empfänger", "lementken@gmail.com"));
 
-                email.From.Add(new MailboxAddress("Absender", configData?.SMTP?.Address));
+                email.From.Add(new MailboxAddress("Absender", senderEmailInfo[0]));
                 email.To.Add(new MailboxAddress("Empfänger", empfängeradresse));
 
 
@@ -57,10 +59,10 @@ namespace TorGuard
                     //smtp.Connect("smtp.web.de", 587, true); //smtp-serveradresse,Port Nr., gesicherteverbindung erzwinge = true#
                     //smtp.Connect("smtp.web.de", 465, MailKit.Security.SecureSocketOptions.SslOnConnect);
                     //smtp.Connect("smtp.web.de", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    smtp.Connect(configData?.SMTP?.Email, configData?.SMTP?.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                    smtp.Connect(senderEmailInfo[0], senderEmailInfo[3], MailKit.Security.SecureSocketOptions.SslOnConnect);
 
                     // smtp.Authenticate("Tor_Guard@web.de", "TorGuard");
-                    smtp.Authenticate(configData?.SMTP?.Address, configData?.SMTP?.Password);//Daten aus der Maske  // Nur erforderlich, wenn der SMTP-Server eine Authentifizierung erfordert
+                    smtp.Authenticate(senderEmailInfo[2], senderEmailInfo[1]);//Daten aus der Maske  // Nur erforderlich, wenn der SMTP-Server eine Authentifizierung erfordert
 
                     await smtp.SendAsync(email);//await verwendet, um asynchrone Operationen zu kennzeichnen
                     smtp.Disconnect(true);
